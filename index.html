@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bruno Sakae Advocacia - Recuperação Empresarial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --color-primary: #2d5a1f;
+        --color-secondary: #0a1128;
+        --color-accent: #d4af37;
+        --color-bg: #fafaf8;
+        --color-text-primary: #1a1a18;
+      }
+      
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--color-bg);
+        color: var(--color-text-primary);
+        letter-spacing: 0.015em;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* Prevent iOS Zoom on inputs */
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Playfair Display', serif;
+        letter-spacing: -0.025em;
+      }
+
+      .financial-number {
+        font-family: 'IBM Plex Mono', monospace;
+        letter-spacing: -0.02em;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      .scroll-smooth {
+        scroll-behavior: smooth;
+      }
+
+      /* Base Animations */
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); max-height: 0; }
+        to { opacity: 1; transform: translateY(0); max-height: 100vh; }
+      }
+      @keyframes hoverGlow {
+        0% { box-shadow: 0 0 0 0 rgba(45, 90, 31, 0.2); }
+        70% { box-shadow: 0 0 0 10px rgba(45, 90, 31, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(45, 90, 31, 0); }
+      }
+      @keyframes subtlePulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.95; transform: scale(1.02); }
+      }
+      
+      /* Scroll Reveal Classes */
+      .reveal-hidden {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* Sped up from 0.8s */
+      }
+      
+      .reveal-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger Delays & Header Specifics */
+      .delay-100 { transition-delay: 100ms; }
+      .delay-200 { transition-delay: 200ms; }
+      .delay-300 { transition-delay: 300ms; }
+      
+      .animate-fade-in-down {
+        animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0; /* Starts invisible until animation kicks in immediately */
+      }
+      
+      .animate-slide-down-menu {
+        animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        transform-origin: top;
+      }
+
+      .header-delay-0 { animation-delay: 0ms; }
+      .header-delay-1 { animation-delay: 100ms; }
+      .header-delay-2 { animation-delay: 200ms; }
+      .header-delay-3 { animation-delay: 300ms; }
+      .header-delay-4 { animation-delay: 400ms; }
+      
+      .animate-hover-glow:hover { animation: hoverGlow 1.5s ease-out infinite; }
+      
+      /* Utilities */
+      .shadow-premium {
+        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
+      }
+      .shadow-premium-hover {
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .shadow-premium-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px -5px rgba(0,0,0,0.12);
+      }
+
+      /* Text Animation Specifics */
+      .word-animation {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.6s forwards;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "recharts": "https://esm.sh/recharts@^3.5.1",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="scroll-smooth">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
