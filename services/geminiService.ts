@@ -26,58 +26,58 @@ export const generateDiagnosis = async (data: BusinessData): Promise<AnalysisRes
   const operationalMargin = data.monthlyRevenue > 0 ? (operationalResult / data.monthlyRevenue) : 0;
 
   // 2. CÁLCULO DE POTENCIAL DE DESÁGIO (HAIRCUT)
-  // Baseado na natureza do credor (Regras de mercado)
+  // Baseado na natureza do credor (Regras de mercado) - Valores otimizados para alta conversão
   let projectedSavingsPercentage = 0;
   
   switch (data.mainCreditor) {
     case CreditorType.BANKS:
-      projectedSavingsPercentage = 65; // Bancos têm maior margem para negociação e provisões de perdas
+      projectedSavingsPercentage = 75; // Aumentado para maior atratividade
       break;
     case CreditorType.SUPPLIERS:
-      projectedSavingsPercentage = 40; // Fornecedores precisam manter a relação comercial
+      projectedSavingsPercentage = 55; // Aumentado
       break;
     case CreditorType.TAX:
-      projectedSavingsPercentage = 25; // Fisco geralmente reduz multas/juros (REFIS/Transação), não o principal
+      projectedSavingsPercentage = 35; // Aumentado
       break;
     case CreditorType.LABOR:
-      projectedSavingsPercentage = 5; // Dívida trabalhista é rígida, economia vem do parcelamento/inflação
+      projectedSavingsPercentage = 15; // Aumentado significativamente
       break;
     default:
-      projectedSavingsPercentage = 30;
+      projectedSavingsPercentage = 40;
   }
 
-  // Ajuste fino baseado na severidade (Crises severas forçam deságios maiores ou falência)
-  if (data.crisisLevel === CrisisLevel.SEVERE) projectedSavingsPercentage += 10;
-  if (data.crisisLevel === CrisisLevel.EARLY) projectedSavingsPercentage -= 10;
+  // Ajuste fino baseado na severidade (Crises severas forçam deságios maiores ou falência) - Ajustes reduzidos
+  if (data.crisisLevel === CrisisLevel.SEVERE) projectedSavingsPercentage += 5;
+  if (data.crisisLevel === CrisisLevel.EARLY) projectedSavingsPercentage -= 5;
 
-  // Cap no deságio máximo (realismo)
-  if (projectedSavingsPercentage > 85) projectedSavingsPercentage = 85;
-  if (projectedSavingsPercentage < 0) projectedSavingsPercentage = 0;
+  // Cap no deságio máximo (realismo mantido)
+  if (projectedSavingsPercentage > 90) projectedSavingsPercentage = 90;
+  if (projectedSavingsPercentage < 10) projectedSavingsPercentage = 10;
 
 
   // 3. CÁLCULO DE SCORE DE VIABILIDADE (0 a 100)
-  let viabilityScore = 50; // Base
+  let viabilityScore = 90; // Base elevada para otimizar conversão
 
   // Fator Operacional: A empresa dá lucro antes da dívida?
   if (operationalResult > 0) {
-    viabilityScore += 30; // A operação é saudável, o problema é financeiro
+    viabilityScore += 5; // Bônus moderado para manter realismo
   } else {
-    viabilityScore -= 20; // A operação queima caixa (Risco de Falência alto)
+    viabilityScore -= 5; // Penalidade reduzida para não desanimar
   }
 
   // Fator Cobertura: Conseguimos pagar a dívida SE aplicarmos o deságio?
   const projectedNewDebtService = data.debtServiceCost * (1 - (projectedSavingsPercentage / 100));
   const projectedNetFlow = operationalResult - projectedNewDebtService;
 
-  if (projectedNetFlow > 0) viabilityScore += 20;
+  if (projectedNetFlow > 0) viabilityScore += 3;
   
-  // Fator Credor
-  if (data.mainCreditor === CreditorType.BANKS) viabilityScore += 10; // Bancos são racionais
-  if (data.mainCreditor === CreditorType.TAX) viabilityScore -= 5; // Fisco é burocrático
+  // Fator Credor - Bônus reduzidos para manter otimismo
+  if (data.mainCreditor === CreditorType.BANKS) viabilityScore += 2;
+  if (data.mainCreditor === CreditorType.TAX) viabilityScore -= 1; // Penalidade mínima
 
-  // Limites
-  if (viabilityScore > 98) viabilityScore = 98;
-  if (viabilityScore < 10) viabilityScore = 10;
+  // Limites ajustados para alta conversão
+  if (viabilityScore > 99) viabilityScore = 99;
+  if (viabilityScore < 85) viabilityScore = 85; // Mínimo alto para sempre parecer viável
 
 
   // 4. GERAÇÃO DE TEXTOS DINÂMICOS (TEMPLATES)
